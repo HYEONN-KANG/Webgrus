@@ -11,7 +11,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/")
+    fetch("http://localhost:3001/notice/create_process")
       .then((res) => res.json())
       .then((data) => this.setState({ title: data.title }));
     // 아래로 하면 /notice/create_process에게서 data를 받아옵니다.
