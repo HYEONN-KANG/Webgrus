@@ -1,0 +1,26 @@
+.write {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.plusButton {
+	width: 30px;
+	height: 30px;
+}
+
+.description {
+	text-align: center;
+}
+.delete {
+	width: 60px;
+	height: 30px;
+}
+
+.hidden {
+	display: none;
+}
+
+.zeroOpacity {
+	opacity: 0;
+}

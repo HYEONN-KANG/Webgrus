@@ -1,0 +1,32 @@
+.container {
+	min-height: 500px;
+	height: 100vh;
+	display: flex;
+}
+
+.contest {
+	width: 100%;
+}
+
+.header {
+	display: flex;
+	justify-content: space-around;
+}
+
+.search {
+	height: 30px;
+	transform: translateY(3px);
+}
+.detailContainer {
+}
+.writinglist {
+	margin-bottom: 30px;
+	list-style: none;
+	display: flex;
+	justify-content: center;
+	padding: 0;
+}
+
+.hidden {
+	display: none;
+}
