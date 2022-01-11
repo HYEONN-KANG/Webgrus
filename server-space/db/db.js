@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-module.exports = () => {
+
+let db = {};
+db.connect = () => {
   function connect() {
     mongoose.connect(
-      "mongodb://localhost:27017",
+      "mongodb://localhost:27017/webgrusdb",
       {
         dbName: "webgrusdb",
         useNewUrlParser: true,
@@ -19,3 +21,5 @@ module.exports = () => {
   connect();
   mongoose.connection.on("disconnected", connect); // 연결이 끊기면 다시 connect 실행
 };
+
+module.exports = db;

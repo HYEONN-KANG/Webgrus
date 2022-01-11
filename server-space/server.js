@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const index = require("./routes/index");
-const notice = require("./routes/notice");
+const indexRouter = require("./routes/index");
+const noticeRouter = require("./routes/notice");
 const cors = require("cors");
 const db = require("./db/db");
 
@@ -12,11 +12,11 @@ const db = require("./db/db");
 // });
 
 // mongodb 연결
-db();
+db.connect();
 
 app.use(cors());
-app.use("/", index);
-app.use("/notice", notice);
+app.use("/", indexRouter);
+app.use("/notice", noticeRouter);
 
 app.listen(3001, function () {
   console.log("nodejs server is running on port 3001");

@@ -11,13 +11,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3001/notice/create_process")
+    fetch("http://localhost:3001/")
       .then((res) => res.json())
       .then((data) => this.setState({ title: data.title }));
     // 아래로 하면 /notice/create_process에게서 data를 받아옵니다.
     // fetch("http://localhost:3001/notice/create_process")
     //   .then((res) => res.json())
-    //   .then((data) => this.setState({ title: data.title }));
+    //   .then((data) =>
+    //     this.setState({
+    //       title: data.title,
+    //     })
+    //   );
   }
 
   render() {
@@ -33,6 +37,25 @@ class App extends React.Component {
             )}
           </div>
         </header>
+        <div>
+          <form action="/notice/create_process" method="post">
+            <p>
+              title:
+              <input type="text" name="title" />
+            </p>
+            <p>
+              desc:
+              <input type="text" name="desc" />
+            </p>
+            <p>
+              author:
+              <input type="text" name="author" />
+            </p>
+            <p>
+              <input type="submit" />
+            </p>
+          </form>
+        </div>
       </div>
     );
   }

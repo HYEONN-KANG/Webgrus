@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 const notionSchema = new mongoose.Schema({
   title: String,
   desc: String,
-  data: {
+  date: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("notions", notionSchema);
+let notion_model = mongoose.model("notions", notionSchema);
+module.export = notion_model;
