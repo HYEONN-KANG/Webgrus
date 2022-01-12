@@ -1,0 +1,13 @@
+.listitem {
+	display: flex;
+}
+
+.item {
+	width: 150px;
+	margin-left: 100px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-around;
+}

@@ -1,0 +1,24 @@
+.container {
+	min-height: 500px;
+	height: 100vh;
+	display: flex;
+}
+
+.notice {
+	width: 100%;
+}
+
+.header {
+	display: flex;
+	justify-content: space-around;
+}
+
+.search {
+	height: 30px;
+	transform: translateY(3px);
+}
+
+.writingList {
+	list-style: none;
+	padding: 0;
+}
