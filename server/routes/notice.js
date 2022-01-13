@@ -15,15 +15,12 @@ router.get("/writes", (req, res) => {
   });
 });
 
-/*
-아직 테스트 못해본 코드
 router.post("/create_process", (req, res) => {
   console.log("http://localhost:3001/notice/create_process");
 
-  // const col = db.connect().db("webgrusdb").collection("notice");
-
   // post 형식으로 받아온 데이터를 변수로 저장
   let post = req.body;
+  console.log(post);
   let new_notion = new Notion();
   new_notion.title = post.title;
   new_notion.desc = post.desc;
@@ -34,20 +31,15 @@ router.post("/create_process", (req, res) => {
   console.log("notice.js 데이터 db에 추가 완료");
 
   // 추가한 글의 링크를 클라이언트에게 전달
-  if (err) {
-    res.status(err.status).redirect("/notice/");
-  } else {
-    // 글을 생성하는데에 성공했으면 해당 글의 상세 페이지로 이동해야함 (수정필수)
-    res
-      .status(200)
-      .send({
-        title: new_notion.title,
-        desc: new_notion.desc,
-        author: new_notion.author,
-      })
-      .redirect("/");
-  }
+  // 글을 생성하는데에 성공했으면 해당 글의 상세 페이지로 이동해야함 (수정필수)
+  res.status(200).send({
+    status: "complete",
+  });
 });
+
+/*
+아직 테스트 못해본 코드
+
 
 router.get("/update/:id", (req, res) => {
 	
@@ -64,7 +56,12 @@ router.get("/update/:id", (req, res) => {
 */
 
 router.post("/delete_process", (req, res) => {
-  Notion.remove({}, (err, notion) => {
+  // post 형식으로 받아온 데이터를 변수로 저장
+  let post = req.body;
+  console.log(post);
+
+  // document 삭제
+  Notion.remove({ _id: post._id }, (err) => {
     if (err) return res.json(err);
     res.redirect("/notice/");
   });

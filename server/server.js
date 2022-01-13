@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 const test = require("./routes/test");
 const notice = require("./routes/notice");
 const freeBoard = require("./routes/freeboard");
@@ -9,6 +10,8 @@ const db = require("./db");
 
 // db 연결
 db.connect();
+
+app.use(bodyParser.json());
 
 app.use("/webgrus", test);
 app.use("/notice", notice);

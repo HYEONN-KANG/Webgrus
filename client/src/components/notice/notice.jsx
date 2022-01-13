@@ -36,8 +36,19 @@ const Notice = (props) => {
   };
   const deleteWrite = (writeIndex) => {
     const data = [...writes];
+    console.log(writes);
+    console.log(data);
     data.pop(writeIndex);
     setWrites(data);
+    console.log(writeIndex);
+    // /notice/delete_process 로 삭제할 글의 _id를 보낸다.
+    // axios
+    //   .post("/notice/delete_process", {
+
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    // });
   };
 
   return (
