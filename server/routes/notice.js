@@ -28,21 +28,25 @@ router.post("/addWrite", (req, res) => {
   new_notion.author = "test user name";
   new_notion.date = post.newWrite.date;
 
-  new_notion.save().then((err) => {
-    // 데이터를 db에 추가
-    if (err) console.log("save에서 err 발생", err);
-    else console.log("notice.js 데이터 db에 추가 완료");
+  new_notion
+    .save()
+    .then((savedNotion) => {
+      // 데이터를 db에 추가
+      console.log("save 성공", savedNotion);
 
-    Notion.find({}, (err, notice) => {
-      // 다시 글 목록을 불러와서 클라이언트로 전달
-      if (err) {
-        console.log("공지목록 가져오기 error 발생");
-        return res.json(err);
-      }
-      console.log("공지목록 가져오기 성공");
-      res.json(notice);
+      Notion.find({}, (err, notice) => {
+        // 다시 글 목록을 불러와서 클라이언트로 전달
+        if (err) {
+          console.log("공지목록 가져오기 error 발생");
+          return res.json(err);
+        }
+        console.log("공지목록 가져오기 성공");
+        res.json(notice);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 });
 
 router.post("/deleteWrite", (req, res) => {
