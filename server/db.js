@@ -1,10 +1,12 @@
 const mongoose = require("mongoose");
 
+const uri = "";
+
 let db = {};
 db.connect = () => {
   function connect() {
     mongoose.connect(
-      "mongodb://localhost:27017/webgrusdb",
+      uri,
       {
         dbName: "webgrusdb",
         useNewUrlParser: true,
