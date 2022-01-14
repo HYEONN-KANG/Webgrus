@@ -1,95 +1,80 @@
-import React, { useEffect, useState } from "react";
-import styles from "./notice.module.css";
-import SideBar from "../sidebar/sideBar";
-import Write from "../write/write";
-import AddWrite from "../write/addwrite/addWrite";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import styles from './notice.module.css';
+import Write from '../write/write';
+import AddWrite from '../write/addwrite/addWrite';
+import axios from 'axios';
 
-const Notice = (props) => {
-  const [authority, setAuthority] = useState({ authority: 2 });
-  const [addWrite, setAddWriting] = useState(false);
-  const [writes, setWrites] = useState([]);
+const Notice = ({ user }) => {
+	const [addWrite, setAddWriting] = useState(false);
+	const [writes, setWrites] = useState([]);
 
-  useEffect(() => {
-    // 권한 체크
-    if (props.login.authority === 2) {
-      setAuthority({ authority: 2 });
-    }
-  }, [props.login.authority]);
+	useEffect(() => {
+		// 글 목록 불러오기
+		const page = 1; // 페이지에 대당하는 파라미터(	ex 1페이지의 글 목록 주세요)
+		axios
+			.get('/api/notice/writes', { page }) // 글 목록 요청 -> 페이지별 글 나누기
+			.then((res) => {
+				setWrites(res.data);
+			});
+	}, []);
 
-  useEffect(() => {
-    // 글 목록 불러오기
-    axios
-      .get("/notice/writes") // 글 목록 요청
-      .then((res) => {
-        setWrites(res.data);
-      });
-  }, []);
+	// 글쓰기 모드
+	const writing = () => {
+		setAddWriting(true);
+	};
 
-  const writing = () => {
-    setAddWriting(true);
-  };
+	// 글쓰고 추가 요청
+	const addWriting = (newWrite) => {
+		setAddWriting(false);
 
-  const addWriting = (newWrites) => {
-    setAddWriting(false);
-    setWrites(newWrites);
-  };
-  const deleteWrite = (writeIndex) => {
-    const data = [...writes];
-    console.log(writes);
-    console.log(data);
-    data.pop(writeIndex);
-    setWrites(data);
-    console.log(writeIndex);
-    // /notice/delete_process 로 삭제할 글의 _id를 보낸다.
-    // axios
-    //   .post("/notice/delete_process", {
+		axios
+			.post('/api/notice/addWrite', { newWrite }) // 새로운 글(write_id 미포함)
+			.then((res) => {
+				setWrites(res.data); // 새 글 목록 받아서 저장
+				console.log(res);
+			});
+	};
 
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    // });
-  };
+	// 글 삭제 요청
+	const deleteWrite = (writeId) => {
+		axios
+			.post('/api/notice/deleteWrite', { writeId }) // 글 id 전달
+			.then((res) => {
+				setWrites(res.data); // 새 글 목록 받아서 저장
+			});
+	};
 
-  return (
-    <div className={styles.container}>
-      <SideBar login={props.login} setLogin={props.setLogin} />
-      <section className={styles.notice}>
-        <div className={styles.header}>
-          <h2>공지사항</h2>
-          <div className={styles.search}>
-            <input type="search" placeholder="검색"></input>
-            {authority.authority === 2 && (
-              <input type="button" onClick={writing} value="글쓰기"></input>
-            )}
-          </div>
-        </div>
-        {addWrite && (
-          <AddWrite
-            writes={writes}
-            login={props.login}
-            addWriting={addWriting}
-          />
-        )}
-        {addWrite || (
-          <ul className={styles.writingList}>
-            {Object.keys(writes).map((key) => {
-              return (
-                <Write
-                  key={key}
-                  writeIndex={key}
-                  login={props.login}
-                  write={writes[key]}
-                  deleteWrite={deleteWrite}
-                  authority={authority}
-                />
-              );
-            })}
-          </ul>
-        )}
-      </section>
-    </div>
-  );
+	return (
+		<div className={styles.container}>
+			<section className={styles.notice}>
+				<div className={styles.header}>
+					<h2>공지사항</h2>
+					<div className={styles.search}>
+						<input type="search" placeholder="검색"></input>
+						{user.authority === '2' && (
+							<input type="button" onClick={writing} value="글쓰기"></input>
+						)}
+					</div>
+				</div>
+				{addWrite && <AddWrite writes={writes} user={user} addWriting={addWriting} />}
+				{addWrite || (
+					<ul className={styles.writingList}>
+						{Object.keys(writes).map((key) => {
+							return (
+								<Write
+									key={key}
+									writeIndex={key}
+									user={user}
+									write={writes[key]}
+									deleteWrite={deleteWrite}
+								/>
+							);
+						})}
+					</ul>
+				)}
+			</section>
+		</div>
+	);
 };
 
 export default Notice;

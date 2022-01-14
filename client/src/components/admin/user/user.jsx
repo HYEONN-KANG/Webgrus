@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
 import styles from './user.module.css';
 
-const User = ({ uni, userData, changeAuthority }) => {
+// 유저 목록 낱개 컴포넌트
+const User = ({ userData, changeAuthority }) => {
 	const authRef = useRef();
 
 	const changeAuth = () => {
-		changeAuthority(uni, userData, parseInt(authRef.current.value));
+		changeAuthority(userData, authRef.current.value);
 	};
 
 	return (

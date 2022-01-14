@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styles from './write.module.css';
 
-const Write = ({ deleteWrite, writeIndex, login, write, authority }) => {
+const Write = ({ deleteWrite, user, write }) => {
 	const [toggle, setToggle] = useState(false);
 
+	// 글 접었다 폈다 하는 기능
 	const toggleDescroption = () => {
 		if (toggle) {
 			setToggle(false);
@@ -11,9 +12,12 @@ const Write = ({ deleteWrite, writeIndex, login, write, authority }) => {
 			setToggle(true);
 		}
 	};
+
+	// 글 삭제
 	const deleteWriteProps = () => {
-		deleteWrite(writeIndex);
+		deleteWrite(write._id);
 	};
+
 	return (
 		<>
 			<li className={styles.write}>
@@ -32,7 +36,7 @@ const Write = ({ deleteWrite, writeIndex, login, write, authority }) => {
 				<h3>{write.title}</h3>
 				<h3>{write.author}</h3>
 				<h3>{write.date}</h3>
-				{(login.id === write.id) | (authority.authority === 2) ? (
+				{(user.id === write.id) | (user.authority === '2') ? (
 					<button onClick={deleteWriteProps} className={styles.delete}>
 						삭제
 					</button>

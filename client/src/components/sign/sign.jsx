@@ -1,32 +1,41 @@
 import React, { useRef } from 'react';
 import styles from './sign.module.css';
-import SideBar from '../sidebar/sideBar';
-import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Sign = (props) => {
-	const dispatch = useDispatch();
 	const formRef = useRef();
+	const navigate = useNavigate();
+
+	// 회원 가입 요청
 	const sign = (event) => {
 		event.preventDefault();
 		if (formRef.current.passWord.value === formRef.current.passWordCheck.value) {
-			dispatch({
-				type: 'ADDUSER',
-				data: {
+			axios
+				.post('/api/users/sign', {
 					id: formRef.current.id.value,
 					name: formRef.current.name.value,
-					email: formRef.current.email.value,
 					passWord: formRef.current.passWord.value,
-				},
-			});
+					email: formRef.current.email.value,
+				})
+				.then((res) => {
+					if (res.data.msg === 'idDuplicate') {
+						alert('중복된 학번입니다.');
+					} else {
+						alert('회원가입 승인을 기다려주세요.');
+						navigate('/login'); // 성공시 로그인 페이지로
+					}
+				});
+
 			formRef.current.reset();
 		} else {
+			alert('비밀번호를 확인해주세요.'); // passWord가 확인과 같지 않음.
 			formRef.current.passWord.value = '';
 			formRef.current.passWordCheck.value = '';
 		}
 	};
 	return (
 		<div className={styles.container}>
-			<SideBar login={props.login} setLogin={props.setLogin} />
 			<div className={styles.formContainer}>
 				<form ref={formRef} className={styles.form} onSubmit={sign}>
 					<input type="text" name="name" placeholder="이름(실명)" autoFocus />

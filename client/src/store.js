@@ -1,6 +1,7 @@
 import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+// 사용했다가 현재 미사용.
 const reducer = (state, action) => {
 	if (state === undefined) {
 		return [];

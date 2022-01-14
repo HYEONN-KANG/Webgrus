@@ -1,46 +1,43 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import styles from './login.module.css';
-import SideBar from '../sidebar/sideBar';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import axios from 'axios';
 
-const Login = (props) => {
-	// const users = useSelector((state) => state); // redux
-	const [userData, setUserData] = useState([]);
+const Login = ({ setUser }) => {
 	const navigate = useNavigate();
 	const formRef = useRef();
 
-	useEffect(() => {
-		axios.get('/users').then((res) => {
-			console.log(res.data);
-			setUserData(res.data);
-		});
-	}, []);
-
+	// 로그인 함수
 	const login = (event) => {
 		event.preventDefault();
 		const id = formRef.current.id.value;
 		const passWord = formRef.current.passWord.value;
-		let check = false;
-		for (let i = 0; i < userData.length; i++) {
-			if ((id === String(userData[i].id)) & (passWord === String(userData[i].passWord))) {
-				check = true;
-				props.setLogin({ ...userData[i] });
-				navigate('/');
-				break;
-			}
-		}
-		if (!check) {
-			alert('학번 또는 비밀번호가 틀립니다.');
-			formRef.current.passWord.value = '';
-		}
+
+		axios
+			.post('/api/users/login', { id, passWord }) // 로그인요청
+			.then((res) => {
+				if (res.data.msg === 'login') {
+					// 로그인 성공시
+					const data = {
+						id: res.data.id,
+						name: res.data.name,
+						email: res.data.email,
+						authority: res.data.authority,
+					};
+					setUser(data);
+					console.log('login!');
+					navigate('/');
+				} else if (res.data.msg === 'wait') {
+					alert('승인 심사중');
+				}
+			});
+		// 로그인 실패시 비밀번호 칸 빈칸으로
+		formRef.current.passWord.value = '';
+		formRef.current.passWord.placeholder = '다시 입력하세요.';
 	};
 
 	return (
 		<div className={styles.container}>
-			<SideBar login={props.login} setLogin={props.setLogin} />
 			<div className={styles.formContainer}>
 				<form ref={formRef} className={styles.form} onSubmit={login}>
 					<input type="text" name="id" placeholder="학번" autoFocus />

@@ -15,55 +15,56 @@ router.get("/writes", (req, res) => {
   });
 });
 
-router.post("/create_process", (req, res) => {
-  console.log("http://localhost:3001/notice/create_process");
+router.post("/addWrite", (req, res) => {
+  console.log("http://localhost:3001/api/notice/addWrite");
 
   // post 형식으로 받아온 데이터를 변수로 저장
   let post = req.body;
   console.log(post);
   let new_notion = new Notion();
-  new_notion.title = post.title;
-  new_notion.desc = post.desc;
-  new_notion.author = post.author;
+  new_notion.id = "test user id"; // user id
+  new_notion.title = post.newWrite.title;
+  new_notion.description = post.newWrite.description;
+  new_notion.author = "test user name";
+  new_notion.date = post.newWrite.date;
 
-  // 데이터를 db에 추가
-  new_notion.save();
-  console.log("notice.js 데이터 db에 추가 완료");
+  new_notion.save().then((err) => {
+    // 데이터를 db에 추가
+    if (err) console.log("save에서 err 발생", err);
+    else console.log("notice.js 데이터 db에 추가 완료");
 
-  // 추가한 글의 링크를 클라이언트에게 전달
-  // 글을 생성하는데에 성공했으면 해당 글의 상세 페이지로 이동해야함 (수정필수)
-  res.status(200).send({
-    status: "complete",
+    Notion.find({}, (err, notice) => {
+      // 다시 글 목록을 불러와서 클라이언트로 전달
+      if (err) {
+        console.log("공지목록 가져오기 error 발생");
+        return res.json(err);
+      }
+      console.log("공지목록 가져오기 성공");
+      res.json(notice);
+    });
   });
 });
 
-/*
-아직 테스트 못해본 코드
-
-
-router.get("/update/:id", (req, res) => {
-	
-})
-
-// router.post("/update_process", (req, res) => {
-//   let post = req.body;
-//   let old_notion = new Notion();
-//   old_notion.title = post.old_title;
-//   old_notion.desc = post.old_desc;
-//   old_notion.author = post.old_author;
-
-// });
-*/
-
-router.post("/delete_process", (req, res) => {
+router.post("/deleteWrite", (req, res) => {
   // post 형식으로 받아온 데이터를 변수로 저장
   let post = req.body;
   console.log(post);
 
+  let delete_id = post.writeId; // 삭제할 글의 아이디
+
   // document 삭제
-  Notion.remove({ _id: post._id }, (err) => {
-    if (err) return res.json(err);
-    res.redirect("/notice/");
+  Notion.remove({ _id: delete_id }, (err) => {
+    if (err) console.log("삭제실패", err);
+    else console.log("삭제 성공");
+  });
+
+  Notion.find({}, (err, notice) => {
+    if (err) {
+      console.log("공지목록 가져오기 error 발생");
+      return res.json(err);
+    }
+    console.log("공지목록 가져오기 성공");
+    res.json(notice);
   });
 });
 
