@@ -1,81 +1,74 @@
 const express = require("express");
 const router = express.Router();
+const { User } = require("../models/User");
 
-// 유저 정보 기록 (DB가 없어서..)
-const users = [
-  {
-    id: "1",
-    name: "webgrus",
-    email: "webgrus@gmail.com",
-    authority: "2",
-    passWord: "1",
-  },
-  {
-    id: "11111111",
-    name: "user1",
-    email: "user1@gmail.com",
-    authority: "1",
-    passWord: "11111111",
-  },
-];
+const { auth } = require("../middleware/auth");
 
-// 유저 리스트 받아오기(admin에서 사용)
-router.get("/list", (req, res) => {
-  res.send(users);
+const nodemailer = require("nodemailer");
+
+//=================================
+//             User
+//=================================
+
+router.get("/auth", auth, (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    phonenumber: req.user.phonenumber,
+    role: req.user.role,
+    image: req.user.image,
+  });
 });
 
-// admin에서 유저 권한 수정
-router.post("/change", (req, res) => {
-  const { id, authority } = req.body;
+router.post("/register", (req, res) => {
+  const user = new User(req.body);
 
-  for (let i = 0; i < users.length; i++) {
-    // 유저 권한 수정
-    if (users[i].id === id) {
-      users[i].authority = authority;
-    }
-  }
-
-  res.send(users);
+  user.save((err, doc) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({
+      success: true,
+    });
+  });
 });
 
-// 회원 가입
-router.post("/sign", (req, res) => {
-  const { id, name, passWord, email } = req.body;
-
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === id) {
-      return res.json({ msg: "idDuplicate" });
-    }
-  }
-  users.push({ id, name, passWord, email, authority: "0" });
-  res.status(200).json({ msg: "signed !" });
-});
-
-// 로그인 (아직 유효성 체크 X)
 router.post("/login", (req, res) => {
-  const { id, passWord } = req.body;
-
-  for (let i = 0; i < users.length; i++) {
-    if (
-      (users[i].id === id) &
-      (users[i].passWord === passWord) &
-      ((users[i].authority === "2") | (users[i].authority === "1"))
-    ) {
-      return res.status(200).json({
-        msg: "login",
-        id: users[i].id,
-        name: users[i].name,
-        email: users[i].email,
-        authority: users[i].authority,
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user)
+      return res.json({
+        loginSuccess: false,
+        message: "Auth failed, email not found",
       });
-    } else if (
-      (users[i].id === id) &
-      (users[i].passWord === passWord) &
-      (users[i].authority === "0")
-    ) {
-      return res.json({ msg: "wait" });
+
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch)
+        return res.json({ loginSuccess: false, message: "Wrong password" });
+
+      user.generateToken((err, user) => {
+        if (err) return res.status(400).send(err);
+        res.cookie("w_authExp", user.tokenExp);
+        res.cookie("w_auth", user.token).status(200).json({
+          loginSuccess: true,
+          userId: user._id,
+        });
+      });
+    });
+  });
+});
+
+router.get("/logout", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { token: "", tokenExp: "" },
+    (err, doc) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({
+        success: true,
+      });
     }
-  }
+  );
 });
 
 module.exports = router;

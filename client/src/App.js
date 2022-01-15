@@ -17,6 +17,11 @@ import {
   study,
 } from "./components/authCheck/routeComponent";
 
+// import LectureUploadPage from "./components/lecture/LectureUploadPage/LectureUploadPage.js";
+// import LecturePage from "./components/lecture/LecturePage/LecturePage.js";
+// import LectureDetailPage from "./components/lecture/LectureDetailPage/LectureDetailPage.js";
+// import LectureEditPage from "./components/lecture/LectureEditPage/LectureEditPage";
+
 function App() {
   const [user, setUser] = useState({ authority: "2" }); // 유저 정보 개선 필요.
 
@@ -33,6 +38,22 @@ function App() {
           path="/lecture"
           element={<Auth Component={lecture} user={user} cpAuth={"1"} />}
         />
+        {/* <Route  path="/lecture" component={Auth(LecturePage, true)} />
+        <Route
+          
+          path="/lecture/register"
+          component={Auth(LectureUploadPage, true)}
+        />
+        <Route
+          
+          path="/lecture/:lectureId"
+          component={Auth(LectureDetailPage, true)}
+        />
+        <Route
+          
+          path="/lecture/:lectureId/edit"
+          component={Auth(LectureEditPage, true)}
+        /> */}
         {/* 스터디 */}
         <Route
           path="/study"

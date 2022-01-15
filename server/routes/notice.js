@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Notion = require("../model/notion"); // notion의 스키마 모델
+const Notion = require("../models/notion"); // notion의 스키마 모델
 const mongoose = require("mongoose");
 
 const today = new Date();
