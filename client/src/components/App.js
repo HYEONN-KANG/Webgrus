@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import { useState } from "react";
-import Login from "./components/login/login";
-import Main from "./components/main/main";
-import Notice from "./components/notice/notice";
-import Sign from "./components/sign/sign";
-import store from "./store";
-import SideBar from "./components/sidebar/sideBar";
-import Auth from "./components/authCheck/auth";
+import Login from "./views/login/login";
+import Main from "./views/main/main";
+import Notice from "./views/notice/notice";
+import Sign from "./views/sign/sign";
+import store from "../store";
+import SideBar from "./views/sidebar/sideBar";
+import Auth from "./views/authCheck/auth";
 import {
   addContest,
   admin,
@@ -15,7 +15,7 @@ import {
   freeBoard,
   lecture,
   study,
-} from "./components/authCheck/routeComponent";
+} from "./views/authCheck/routeComponent";
 
 // import LectureUploadPage from "./components/lecture/LectureUploadPage/LectureUploadPage.js";
 // import LecturePage from "./components/lecture/LecturePage/LecturePage.js";
