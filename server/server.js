@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const api = require("./routes/api");
 const bodyParser = require("body-parser");
-const db = require("./db");
+const db = require("./config/db");
 const port = 3001; // 포트 넘버
 app.use(express.json());
 
