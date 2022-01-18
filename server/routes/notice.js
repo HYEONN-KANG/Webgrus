@@ -15,7 +15,7 @@ router.get("/writes", (req, res) => {
 });
 
 router.post("/addWrite", (req, res) => {
-  console.log("http://localhost:3001/api/notice/addWrite");
+  // console.log("http://localhost:3001/api/notice/addWrite");
 
   // post 형식으로 받아온 데이터를 변수로 저장
   let post = req.body;
