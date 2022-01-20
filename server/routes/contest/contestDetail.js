@@ -90,17 +90,17 @@ router.post("/deleteWrite", (req, res) => {
     else {
       console.log("공모전 상세 글 삭제 성공");
     }
-  });
 
-  // 다시 공모전의 상세내용 글 불러오기
-  let contestid = post.detail._id;
-  contestDetail.find({ contestid: contestid }, (err, result) => {
-    if (err) {
-      console.log("공모전 상세 가져오기 에러 발생");
-      return res.json(err);
-    }
-    console.log("공모전 상세 가져오기 성공");
-    res.json(result);
+    // 다시 공모전의 상세내용 글 불러오기
+    let contestid = post.detail._id;
+    contestDetail.find({ contestid: contestid }, (err, result) => {
+      if (err) {
+        console.log("공모전 상세 가져오기 에러 발생");
+        return res.json(err);
+      }
+      console.log("공모전 상세 가져오기 성공");
+      res.json(result);
+    });
   });
 });
 

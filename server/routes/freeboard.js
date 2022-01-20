@@ -57,18 +57,18 @@ router.post("/deleteWrite", (req, res) => {
   let delete_id = post.writeId; // 삭제할 글의 아이디
 
   // document 삭제
-  FreeBoard.remove({ _id: delete_id }, (err) => {
+  FreeBoard.deleteOne({ _id: delete_id }, (err) => {
     if (err) console.log("삭제실패", err);
     else console.log("삭제 성공");
-  });
 
-  FreeBoard.find({}, (err, notice) => {
-    if (err) {
-      console.log("자유게시판 목록 가져오기 error 발생");
-      return res.json(err);
-    }
-    console.log("자유게시판 목록 가져오기 성공");
-    res.json(notice);
+    FreeBoard.find({}, (err, notice) => {
+      if (err) {
+        console.log("자유게시판 목록 가져오기 error 발생");
+        return res.json(err);
+      }
+      console.log("자유게시판 목록 가져오기 성공");
+      res.json(notice);
+    });
   });
 });
 

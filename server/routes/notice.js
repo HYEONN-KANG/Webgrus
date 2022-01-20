@@ -56,18 +56,18 @@ router.post("/deleteWrite", (req, res) => {
   let delete_id = post.writeId; // 삭제할 글의 아이디
 
   // document 삭제
-  Notion.remove({ _id: delete_id }, (err) => {
+  Notion.deleteOne({ _id: delete_id }, (err) => {
     if (err) console.log("삭제실패", err);
     else console.log("삭제 성공");
-  });
 
-  Notion.find({}, (err, notice) => {
-    if (err) {
-      console.log("공지목록 가져오기 error 발생");
-      return res.json(err);
-    }
-    console.log("공지목록 가져오기 성공");
-    res.json(notice);
+    Notion.find({}, (err, notice) => {
+      if (err) {
+        console.log("공지목록 가져오기 error 발생");
+        return res.json(err);
+      }
+      console.log("공지목록 가져오기 성공");
+      res.json(notice);
+    });
   });
 });
 
