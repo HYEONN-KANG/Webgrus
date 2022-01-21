@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./contest.module.css";
+import styles from "./contest.module.css?after";
 import { useNavigate } from "react-router-dom";
 import ContestWrite from "./contest_list/contestWrite";
 import ContestDetail from "./contest_list/contest_detail/contestDetail";

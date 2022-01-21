@@ -1,16 +1,21 @@
 .container {
-	padding: 50px;
-	margin: 15px;
+  padding: 50px;
+  margin: 15px;
 }
 .poster {
-	width: 100px;
-	height: 150px;
-	padding: 50px;
-	border: 2px black solid;
-	position: relative;
+  width: 100px;
+  height: 150px;
+  padding: 50px;
+  border: 2px black solid;
+  position: relative;
+}
+.poster img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .dday {
-	position: absolute;
-	bottom: 2px;
-	left: 2px;
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
 }

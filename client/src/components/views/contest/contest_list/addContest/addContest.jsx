@@ -11,10 +11,20 @@ const AddContest = ({ user }) => {
   const [file, setFile] = useState("");
   // const [loading, setLoading] = useState();
 
+  const uploadFile = async () => {
+    const fileSrc = await axios.post("/api/contest/addPoseter", file); // 이미지 파일 저장 및 경로 리턴
+    console.log("fileSrc를 서버로 부터 받아옴", fileSrc);
+    return fileSrc;
+  };
+
   const writing = async (event) => {
     // event.preventDafault();
 
-    const fileSrc = await axios.post("/api/contest/addPoseter", file); // 이미지 파일 저장 및 경로 리턴
+    // 공모전 포스터 이미지를 저장한 경로를 받아온다.
+    let fileSrc = await uploadFile();
+    // fileSrc = fileSrc.slice(14);
+
+    // 새로 등록할 공모전
     const newWrite = {
       id: "user id",
       src: fileSrc.data || "",
@@ -27,10 +37,11 @@ const AddContest = ({ user }) => {
     };
 
     axios
-      .post("/api/contest/addWrite", { newWrite }) // 글 추가
+      .post("/api/contest/addWrite", newWrite) // 글 추가
       .then(navigate(-1))
-      .catch(() => {
+      .catch((err) => {
         alert("글이 제대로 저장되지 않았습니다.");
+        console.log(err);
       });
   };
 
