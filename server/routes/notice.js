@@ -1,21 +1,41 @@
 const express = require("express");
 const router = express.Router();
 const Notion = require("../models/notion"); // notion의 스키마 모델
+const mongoose = require("mongoose");
 
 const today = new Date();
 router.get("/writes", (req, res) => {
+  const page = req.query.page;
+
   Notion.find({}, (err, notice) => {
     if (err) {
       console.log("공지목록 가져오기 error 발생");
       return res.json(err);
     }
     console.log("공지목록 가져오기 성공");
-    res.json(notice);
+
+    // 페이지 관련 부분(현재 notice에만 적용한 상태)
+    // 여기는 페이지가 query로 전달되고 delete나 add에서는 무조건 1페이지로 가도록 했습니다.
+    const selectPage = [];
+
+    for (let i = 0; i < 5; i++) {
+      if (notice[i + 5 * (page - 1)] === undefined) {
+        break;
+      }
+      selectPage.push(notice[i + 5 * (page - 1)]);
+    }
+
+    const response = {
+      pages: Math.ceil(notice.length / 5),
+      writes: selectPage,
+    };
+
+    res.json(response);
   });
 });
 
 router.post("/addWrite", (req, res) => {
-  // console.log("http://localhost:3001/api/notice/addWrite");
+  console.log("http://localhost:3001/api/notice/addWrite");
 
   // post 형식으로 받아온 데이터를 변수로 저장
   let post = req.body;
@@ -40,7 +60,22 @@ router.post("/addWrite", (req, res) => {
           return res.json(err);
         }
         console.log("공지목록 가져오기 성공");
-        res.json(notice);
+        // 페이지 관련 부분(현재 notice에만 적용한 상태)
+        const selectPage = [];
+
+        for (let i = 0; i < 5; i++) {
+          if (notice[i] === undefined) {
+            break;
+          }
+          selectPage.push(notice[i]);
+        }
+
+        const response = {
+          pages: Math.ceil(notice.length / 5),
+          writes: selectPage,
+        };
+
+        res.json(response);
       });
     })
     .catch((err) => {
@@ -56,18 +91,33 @@ router.post("/deleteWrite", (req, res) => {
   let delete_id = post.writeId; // 삭제할 글의 아이디
 
   // document 삭제
-  Notion.deleteOne({ _id: delete_id }, (err) => {
+  Notion.remove({ _id: delete_id }, (err) => {
     if (err) console.log("삭제실패", err);
     else console.log("삭제 성공");
+  });
 
-    Notion.find({}, (err, notice) => {
-      if (err) {
-        console.log("공지목록 가져오기 error 발생");
-        return res.json(err);
+  Notion.find({}, (err, notice) => {
+    if (err) {
+      console.log("공지목록 가져오기 error 발생");
+      return res.json(err);
+    }
+    console.log("공지목록 가져오기 성공");
+    // 페이지 관련 부분(현재 notice에만 적용한 상태)
+    const selectPage = [];
+
+    for (let i = 0; i < 5; i++) {
+      if (notice[i] === undefined) {
+        break;
       }
-      console.log("공지목록 가져오기 성공");
-      res.json(notice);
-    });
+      selectPage.push(notice[i]);
+    }
+
+    const response = {
+      pages: Math.ceil(notice.length / 5),
+      writes: selectPage,
+    };
+
+    res.json(response);
   });
 });
 
