@@ -1,49 +1,22 @@
 const express = require("express");
-const contestDetail = require("../../models/contestDetail");
+const contestDetail = require("../../models/contestDetail"); // contest의 스키마 모델
 const router = express.Router();
-const Contest = require("../../models/contestDetail"); // contest의 스키마 모델
 
 const today = new Date(); // 현재 날짜
 
-// DB
-let writes = [
-  {
-    _id: "1", // 글 id
-    id: "11111111", // user_id
-    title: "제목 1",
-    description: "내용 1",
-    author: "user1",
-    date: `${today.getFullYear()}. ${today.getMonth() + 1}. ${today.getDate()}`,
-  },
-  {
-    _id: "2",
-    id: "22222222",
-    title: "제목 2",
-    description: "내용 2",
-    author: "user2",
-    date: `${today.getFullYear()}. ${today.getMonth() + 1}. ${today.getDate()}`,
-  },
-  {
-    _id: "3",
-    id: "33333333",
-    title: "제목 3",
-    description: "내용 3",
-    author: "user3",
-    date: `${today.getFullYear()}. ${today.getMonth() + 1}. ${today.getDate()}`,
-  },
-];
-
 // 글 목록 받아오기
 router.get("/writes", (req, res) => {
-  const { id } = req.query.id; // 공모전 아이디
-
+  // const { _id } = req.query._id; // 공모전 아이디
+  console.log("req.query._id --------------");
+  console.log(req.query._id);
   // 공모전의 아이디를 가지고 DB에서 찾아 꺼내왔다 치고..
-  Contest.find({ id: id }, (err, result) => {
+  contestDetail.find({ contestid: req.query._id }, (err, result) => {
     if (err) {
       console.log("공모전 상세 가져오기 에러 발생");
       return res.json(err);
     }
     console.log("공모전 상세 가져오기 성공");
+    // console.log(result);
     res.json(result);
   });
 });
@@ -64,7 +37,7 @@ router.post("/addWrite", (req, res) => {
     .then((savedContent) => {
       console.log("공모전 상세 추가 성공");
 
-      Contest.find({ contestid: post.detail._id }, (err, result) => {
+      contestDetail.find({ contestid: post.detail._id }, (err, result) => {
         if (err) {
           console.log("공모전 상세 가져오기 에러 발생");
           return res.json(err);

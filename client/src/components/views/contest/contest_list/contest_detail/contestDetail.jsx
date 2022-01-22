@@ -14,10 +14,11 @@ const ContestDetail = ({ detail, user }) => {
     axios
       .get("/api/contest/detail/writes", {
         params: {
-          id: detail.id, // 해당 공모전 글의 모집 글 요청
+          _id: detail._id, // 해당 공모전 글의 모집 글 요청
         },
       })
       .then((res) => {
+        console.log(res);
         setWrites(res.data);
       });
   }, []);

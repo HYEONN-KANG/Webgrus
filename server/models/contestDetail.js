@@ -11,4 +11,4 @@ const contestDetailSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("contestDetail", contestDetailSchema);
+module.exports = mongoose.model("contestdetails", contestDetailSchema);
