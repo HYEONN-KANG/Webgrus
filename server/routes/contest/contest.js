@@ -13,7 +13,7 @@ router.use('/detail', detail);
 const uploadFolder = multer({
 	storage: multer.diskStorage({
 		destination: function (req, file, cb) {
-			cb(null, 'client/public/posters/'); // 파일 저장 위치
+			cb(null, 'client/public/posters'); // 파일 저장 위치
 		},
 		filename: function (req, file, cb) {
 			cb(null, new Date().valueOf() + path.extname(file.originalname)); //저장될 파일 이름

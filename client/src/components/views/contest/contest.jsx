@@ -64,6 +64,7 @@ const Contest = ({ user }) => {
 
 				<ul className={showDeatilCheck ? styles.hidden : styles.writinglist}>
 					{Object.keys(writes).map((key) => {
+						console.log(writes[key].src);
 						return (
 							<ContestWrite
 								key={key}
