@@ -1,27 +1,19 @@
 import React, { useState } from "react";
-import { loginUser } from "../../../_actions/user_actions";
-import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { Form, Input, Button, Checkbox, Typography, message, Icon } from 'antd';
+import { loginUser } from "../../../../_actions/user_actions";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import { Form, Input, Button, Checkbox, Typography, message } from "antd";
+import { SmileOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 
-import {
-  useLocation,
-  useNavigate,
-  useParams
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function withRouter(Component) {
   function ComponentWithRouterProp(props) {
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
-    return (
-      <Component
-        {...props}
-        router={{ location, navigate, params }}
-      />
-    );
+    return <Component {...props} router={{ location, navigate, params }} />;
   }
 
   return ComponentWithRouterProp;
@@ -34,61 +26,63 @@ function LoginPage(props) {
   const dispatch = useDispatch();
   const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
 
-  const [formErrorMessage, setFormErrorMessage] = useState('')
-  const [rememberMe, setRememberMe] = useState(rememberMeChecked)
+  const [formErrorMessage, setFormErrorMessage] = useState("");
+  const [rememberMe, setRememberMe] = useState(rememberMeChecked);
 
   const handleRememberMe = () => {
-    setRememberMe(!rememberMe)
+    setRememberMe(!rememberMe);
   };
 
-  const initialEmail = localStorage.getItem("rememberMe") ? localStorage.getItem("rememberMe") : '';
+  const initialEmail = localStorage.getItem("rememberMe")
+    ? localStorage.getItem("rememberMe")
+    : "";
 
   return (
     <Formik
       initialValues={{
         email: initialEmail,
-        password: '',
+        password: "",
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string()
-          .email('Email is invalid')
-          .required('Email is required'),
+          .email("Email is invalid")
+          .required("Email is required"),
         password: Yup.string()
-          .min(6, 'Password must be at least 6 characters')
-          .required('Password is required'),
+          .min(6, "Password must be at least 6 characters")
+          .required("Password is required"),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           let dataToSubmit = {
             email: values.email,
-            password: values.password
+            password: values.password,
           };
 
           dispatch(loginUser(dataToSubmit))
-            .then(response => {
+            .then((response) => {
               if (response.payload.loginSuccess) {
-                window.localStorage.setItem('userId', response.payload.userId);
+                window.localStorage.setItem("userId", response.payload.userId);
                 if (rememberMe === true) {
-                  window.localStorage.setItem('rememberMe', values.id);
+                  window.localStorage.setItem("rememberMe", values.id);
                 } else {
-                  localStorage.removeItem('rememberMe');
+                  localStorage.removeItem("rememberMe");
                 }
                 navigate("/");
               } else {
-                setFormErrorMessage('Check out your Account or Password again')
+                setFormErrorMessage("Check out your Account or Password again");
               }
             })
-            .catch(err => {
-              setFormErrorMessage('Check out your Account or Password again')
+            .catch((err) => {
+              setFormErrorMessage("Check out your Account or Password again");
               setTimeout(() => {
-                setFormErrorMessage("")
+                setFormErrorMessage("");
               }, 3000);
             });
           setSubmitting(false);
         }, 500);
       }}
     >
-      {props => {
+      {(props) => {
         const {
           values,
           touched,
@@ -102,21 +96,26 @@ function LoginPage(props) {
         } = props;
         return (
           <div className="app">
-
             <Title level={2}>Sign In</Title>
-            <form onSubmit={handleSubmit} style={{ width: '350px' }}>
-
+            <form onSubmit={handleSubmit} style={{ width: "350px" }}>
               <Form.Item required>
                 <Input
                   id="email"
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={
+                    <SmileOutlined
+                      type="user"
+                      style={{ color: "rgba(0,0,0,.25)" }}
+                    />
+                  }
                   placeholder="Enter your email"
                   type="email"
                   value={values.email}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.email && touched.email ? 'text-input error' : 'text-input'
+                    errors.email && touched.email
+                      ? "text-input error"
+                      : "text-input"
                   }
                 />
                 {errors.email && touched.email && (
@@ -127,14 +126,21 @@ function LoginPage(props) {
               <Form.Item required>
                 <Input
                   id="password"
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                  prefix={
+                    <SmileOutlined
+                      type="lock"
+                      style={{ color: "rgba(0,0,0,.25)" }}
+                    />
+                  }
                   placeholder="Enter your password"
                   type="password"
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={
-                    errors.password && touched.password ? 'text-input error' : 'text-input'
+                    errors.password && touched.password
+                      ? "text-input error"
+                      : "text-input"
                   }
                 />
                 {errors.password && touched.password && (
@@ -143,15 +149,42 @@ function LoginPage(props) {
               </Form.Item>
 
               {formErrorMessage && (
-                <label ><p style={{ color: '#ff0000bf', fontSize: '0.7rem', border: '1px solid', padding: '1rem', borderRadius: '10px' }}>{formErrorMessage}</p></label>
+                <label>
+                  <p
+                    style={{
+                      color: "#ff0000bf",
+                      fontSize: "0.7rem",
+                      border: "1px solid",
+                      padding: "1rem",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    {formErrorMessage}
+                  </p>
+                </label>
               )}
 
               <Form.Item>
-                <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr' }}>
-                  <Checkbox id="rememberMe" onChange={handleRememberMe} checked={rememberMe}>Remember me</Checkbox>
+                <div
+                  style={{ display: "grid", gridTemplateColumns: "2fr 1fr" }}
+                >
+                  <Checkbox
+                    id="rememberMe"
+                    onChange={handleRememberMe}
+                    checked={rememberMe}
+                  >
+                    Remember me
+                  </Checkbox>
                 </div>
-                <Button type="primary" htmlType="submit" className="login-form-button" style={{ minWidth: '100%' }} disabled={isSubmitting} onSubmit={handleSubmit}>
-                    Sign in
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                  style={{ minWidth: "100%" }}
+                  disabled={isSubmitting}
+                  onSubmit={handleSubmit}
+                >
+                  Sign in
                 </Button>
                 Or <a href="/register">register now!</a>
               </Form.Item>
@@ -161,6 +194,6 @@ function LoginPage(props) {
       }}
     </Formik>
   );
-};
+}
 
 export default withRouter(LoginPage);

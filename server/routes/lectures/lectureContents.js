@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { LectureContents } = require("../models/LectureContents");
+const { LectureContents } = require("../../models/LectureContents");
 
-const { auth } = require("../middleware/auth");
+const { auth } = require("../../middleware/auth");
 
 router.post("/post", (req, res) => {
   const list = new LectureContents(req.body);
@@ -36,15 +36,13 @@ router.post("/delete", (req, res) => {
 });
 
 router.post("/edit", (req, res) => {
-  LectureContents.update(
+  LectureContents.updateOne(
     { _id: req.body.postId },
-    { title: req.body.title, content: req.body.content }
-  )
-    .populate("writer")
-    .exec((err) => {
-      if (err) return res.status(400).json({ success: false, err });
-      return res.status(200).json({ success: true });
-    });
+    { $set: { title: req.body.title, content: req.body.content } }
+  ).exec((err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
 });
 
 module.exports = router;

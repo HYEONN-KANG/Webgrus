@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { StudyGroup } = require("../models/StudyGroup");
+const { StudyGroup } = require("../../models/StudyGroup");
 
-const { auth } = require("../middleware/auth");
+const { auth } = require("../../middleware/auth");
 const multer = require("multer");
 
 let storage = multer.diskStorage({

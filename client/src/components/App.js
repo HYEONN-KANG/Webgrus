@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
-import Login from "./views/login/login";
+import Login from "./views/login/LoginPage/LoginPage";
 import Main from "./views/main/main";
 import Notice from "./views/notice/notice";
 // import Study from "./views/study/study";
@@ -8,7 +8,8 @@ import Contest from "./views/contest/contest";
 import AddContest from "./views/contest/contest_list/addContest/addContest";
 import FreeBoard from "./views/free_board/freeBoard";
 import Admin from "./views/admin/admin";
-import Sign from "./views/sign/sign";
+// import Sign from "./views/sign/sign";
+import RegisterPage from "./views/register/RegisterPage/RegisterPage";
 import SideBar from "./views/sidebar/sideBar";
 import Auth from "../hoc/auth";
 import LecturePage from "./views/lecture/LecturePage/LecturePage";
@@ -32,17 +33,17 @@ function App() {
         공지
         <Route path="/notice" element={Auth(Notice, null)} />
         {/* 강의 */}
-        <Route path="/lecture" element={Auth(LecturePage, null)} />
+        <Route path="/lectures" element={Auth(LecturePage, null)} />
         <Route
-          path="/lecture/register"
+          path="/lectures/register"
           element={Auth(LectureUploadPage, null)}
         />
         <Route
-          path="/lecture/:lectureId"
+          path="/lectures/:lectureId"
           element={Auth(LectureDetailPage, null)}
         />
         <Route
-          path="/lecture/:lectureId/edit"
+          path="/lectures/:lectureId/edit"
           element={Auth(LectureEditPage, null)}
         />
         {/* 스터디 */}
@@ -70,7 +71,7 @@ function App() {
         {/* 로그인 */}
         <Route path="/login" element={<Login setUser={setUser} />} />
         {/* 회원가입 */}
-        <Route path="/sign" element={<Sign />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </>
   );

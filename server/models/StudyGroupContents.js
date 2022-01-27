@@ -1,24 +1,30 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const studygroupContentsSchema = mongoose.Schema({
-  writer: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+const studygroupContentsSchema = mongoose.Schema(
+  {
+    writer: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    studygroupId: {
+      type: Schema.Types.ObjectId,
+      ref: "StudyGroup",
+    },
+    title: {
+      type: String,
+    },
+    content: {
+      type: String,
+    },
   },
-  studygroupId: {
-    type: Schema.Types.ObjectId,
-    ref: 'StudyGroup'
-  },
-  title: {
-    type: String
-  },
-  content: {
-    type: String
-  }
-}, { timestamps: true })
+  { timestamps: true }
+);
 
-const StudyGroupContents = mongoose.model('StudyGroupContents', studygroupContentsSchema);
+const StudyGroupContents = mongoose.model(
+  "StudyGroupContents",
+  studygroupContentsSchema
+);
 
-module.exports = { StudyGroupContents }
+module.exports = { StudyGroupContents };

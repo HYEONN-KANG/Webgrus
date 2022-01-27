@@ -25,7 +25,7 @@ const SideBar = ({ user, setUser }) => {
           Webgrus
         </h2>
         <h3 onClick={() => navigate("/notice")}>공지</h3>
-        <h3 onClick={() => navigate("/lecture")}>강의</h3>
+        <h3 onClick={() => navigate("/lectures")}>강의</h3>
         <h3 onClick={() => navigate("/studygroups")}>스터디</h3>
         <h3 onClick={() => navigate("/contest")}>공모전</h3>
         <h3 onClick={() => navigate("/freeboard")}>자유게시판</h3>
@@ -41,7 +41,7 @@ const SideBar = ({ user, setUser }) => {
         {authority.authority === "0" && (
           <>
             <h3 onClick={() => navigate("/login")}>로그인</h3>
-            <h3 onClick={() => navigate("/sign")}>회원가입</h3>
+            <h3 onClick={() => navigate("/register")}>회원가입</h3>
           </>
         )}
       </div>

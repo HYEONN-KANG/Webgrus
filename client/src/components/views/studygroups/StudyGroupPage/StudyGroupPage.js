@@ -58,13 +58,15 @@ function StudyGroupPage(props) {
       <br />
       <Row gutter={[32, 16]}>
         {StudyGroup.map((groups, index) => {
+          console.log(groups);
           return (
             <Col lg={6} md={8} xs={24} key={index}>
               <a href={`/studygroups/${groups._id}`}>
                 <div>
                   <img
                     style={{ width: "100%" }}
-                    src={`http://localhost:3001/${groups.filePath}`}
+                    src={groups.filePath}
+                    alt="이미지"
                   />
                 </div>
                 <br />

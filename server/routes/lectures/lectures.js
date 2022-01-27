@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { Lecture } = require("../models/Lecture");
+const { Lecture } = require("../../models/Lecture");
 
-const { auth } = require("../middleware/auth");
+const { auth } = require("../../middleware/auth");
 const multer = require("multer");
 
 let storage = multer.diskStorage({
@@ -92,27 +92,13 @@ router.post("/editLecture", (req, res) => {
 });
 
 router.post("/updateApplicationStatus", (req, res) => {
-  if (req.body.Capacity === req.body.Applicants) {
-    Lecture.updateOne(
-      { _id: req.body.LectureId },
-      { applicationPeriod: false }
-    ).exec((err) => {
-      if (err) return res.status(400).json({ success: false, err });
-      return res
-        .status(200)
-        .json({ success: true, apply: req.body.Applicants });
-    });
-  } else {
-    Lecture.updateOne(
-      { _id: req.body.LectureId },
-      { applicationPeriod: true }
-    ).exec((err) => {
-      if (err) return res.status(400).json({ success: false, err });
-      return res
-        .status(200)
-        .json({ success: true, apply: req.body.Applicants });
-    });
-  }
+  Lecture.updateOne(
+    { _id: req.body.LectureId },
+    { $set: { applicationPeriod: req.body.Boolean } }
+  ).exec((err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
 });
 
 module.exports = router;
