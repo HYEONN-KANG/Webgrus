@@ -1,17 +1,26 @@
 .write {
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
+	margin: 15px 50px;
+	padding: 10px;
+	border: 3px solid rgb(198, 203, 255);
+	border-radius: 10px;
 }
 
 .plusButton {
-	width: 30px;
-	height: 30px;
+	width: 35px;
+	height: 35px;
+	border: solid rgb(198, 203, 255);
+	font-size: 20px;
+	color: rgba(0, 20, 236, 0.582);
+	background-color: rgba(138, 167, 247, 0.781);
+	border-radius: 50%;
 }
 
 .description {
 	text-align: center;
 }
+
 .delete {
 	width: 60px;
 	height: 30px;
@@ -19,6 +28,16 @@
 
 .hidden {
 	display: none;
+}
+
+.listItem {
+	margin-right: 80px;
+}
+
+.listItem:nth-child(3),
+.listItem:nth-child(4) {
+	text-align: center;
+	width: 200px;
 }
 
 .zeroOpacity {

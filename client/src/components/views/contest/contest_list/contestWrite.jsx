@@ -21,9 +21,14 @@ const ContestWrite = ({ showDetail, write, user, deleteWrite }) => {
 				<span className={styles.dday}>D-day 계산하기</span>
 			</div>
 			<h2>{write.title}</h2>
-			{(user.authority === '2') | (user.id === write.id) && (
-				<button onClick={handleDeleteWrite}>삭제</button>
-			)}
+			<button
+				className={`${
+					(user.authority === '2') | (user.id === write.id) ? styles.deleteButton : styles.hidden
+				}`}
+				onClick={handleDeleteWrite}
+			>
+				삭제
+			</button>
 		</li>
 	);
 };

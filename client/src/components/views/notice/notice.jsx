@@ -78,13 +78,21 @@ const Notice = ({ user }) => {
 		<div className={styles.container}>
 			<section className={styles.notice}>
 				<div className={styles.header}>
-					<h2>공지사항</h2>
-					<div className={styles.search}>
-						<input type="search" placeholder="검색"></input>
-						{user.authority === '2' && (
-							<input type="button" onClick={writing} value="글쓰기"></input>
-						)}
-					</div>
+					<div className={styles.noticeTitle}>공지사항</div>
+					<form className={styles.search}>
+						<input className={styles.searchInput} type="search" placeholder="🔍"></input>
+						<input className={styles.searchButton} type="button" value="검색"></input>
+						<input
+							className={`${
+								(user.authority === '1') | (user.authority === '2')
+									? styles.addWrite
+									: styles.hidden
+							}`}
+							type="button"
+							onClick={writing}
+							value="글쓰기"
+						></input>
+					</form>
 				</div>
 				{editWrite.status && <EditWrite write={editWrite.write} editWriting={editWriting} />}
 				{addWrite && <AddWrite writes={writes.writes} user={user} addWriting={addWriting} />}
@@ -106,7 +114,7 @@ const Notice = ({ user }) => {
 					</ul>
 				)}
 				{addWrite || (
-					<div className={`${editWrite.status ? styles.hidden : styles.none}`}>
+					<div className={`${styles.pages} ${editWrite.status ? styles.hidden : styles.none}`}>
 						{writes.pages &&
 							// 전달 받은 페이지의 수 만큼 페이지 이동 버톤 만들기
 							[...Array(writes.pages)].map((n, index) => {

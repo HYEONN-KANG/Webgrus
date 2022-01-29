@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styles from './contest.module.css?after';
+import styles from './contest.module.css';
 import { useNavigate } from 'react-router-dom';
 import ContestWrite from './contest_list/contestWrite';
 import ContestDetail from './contest_list/contest_detail/contestDetail';
 import axios from 'axios';
-import AddWrite from '../write/addwrite/addWrite';
 
 const Contest = ({ user }) => {
 	const navigate = useNavigate();
@@ -41,11 +40,18 @@ const Contest = ({ user }) => {
 		<div className={styles.container}>
 			<section className={styles.contest}>
 				<div className={styles.header}>
-					<h2>공모전</h2>
+					<div className={styles.contestTitle}>공모전</div>
 					{showDeatilCheck || (
-						<div className={styles.search}>
-							<input type="search" placeholder="검색"></input>
-						</div>
+						<form className={styles.search}>
+							<input className={styles.searchInput} type="search" placeholder="🔍"></input>
+							<input className={styles.searchButton} type="button" value="검색"></input>
+							<button
+								className={`${showDeatilCheck ? styles.hidden : styles.addWriteButton}`}
+								onClick={() => navigate('/contest/addWriting')}
+							>
+								공모전 글 작성
+							</button>
+						</form>
 					)}
 				</div>
 
@@ -55,14 +61,7 @@ const Contest = ({ user }) => {
 					</div>
 				)}
 
-				<button
-					className={showDeatilCheck ? styles.hidden : styles.addWriteButton}
-					onClick={() => navigate('/contest/addWriting')}
-				>
-					공모전 글 작성
-				</button>
-
-				<ul className={showDeatilCheck ? styles.hidden : styles.writinglist}>
+				<ul className={showDeatilCheck ? styles.hidden : styles.writingList}>
 					{Object.keys(writes).map((key) => {
 						console.log(writes[key].src);
 						return (
