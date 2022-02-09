@@ -45,10 +45,10 @@ function LoginPage(props) {
           password: "",
         }}
         validationSchema={Yup.object().shape({
-          id: Yup.string().required("ID is required"),
+          id: Yup.string().required("학번을 입력해주세요"),
           password: Yup.string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+            .min(6, "비밀번호는 6자리 이상 입력해야합니다")
+            .required("비밀번호를 입력해주세요"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -72,12 +72,12 @@ function LoginPage(props) {
                   navigate("/");
                 } else {
                   setFormErrorMessage(
-                    "Check out your Account or Password again"
+                    "학번이나 비밀번호를 확인해주세요"
                   );
                 }
               })
               .catch((err) => {
-                setFormErrorMessage("Check out your Account or Password again");
+                setFormErrorMessage("ID나 비밀번호를 확인해주세요");
                 setTimeout(() => {
                   setFormErrorMessage("");
                 }, 3000);
@@ -100,7 +100,7 @@ function LoginPage(props) {
           } = props;
           return (
             <div className="app">
-              <Title level={2}>Sign In</Title>
+              <Title level={2}>로그인</Title>
               <form onSubmit={handleSubmit} style={{ width: "350px" }}>
                 <Form.Item required>
                   <Input
@@ -111,7 +111,7 @@ function LoginPage(props) {
                         style={{ color: "rgba(0,0,0,.25)" }}
                       />
                     }
-                    placeholder="Enter your ID"
+                    placeholder="학번"
                     type="text"
                     value={values.id}
                     onChange={handleChange}
@@ -136,7 +136,7 @@ function LoginPage(props) {
                         style={{ color: "rgba(0,0,0,.25)" }}
                       />
                     }
-                    placeholder="Enter your password"
+                    placeholder="비밀번호"
                     type="password"
                     value={values.password}
                     onChange={handleChange}
@@ -177,7 +177,7 @@ function LoginPage(props) {
                       onChange={handleRememberMe}
                       checked={rememberMe}
                     >
-                      Remember me
+                      학번 기억하기
                     </Checkbox>
                   </div>
                   <Button
@@ -188,9 +188,9 @@ function LoginPage(props) {
                     disabled={isSubmitting}
                     onSubmit={handleSubmit}
                   >
-                    Sign in
+                    로그인
                   </Button>
-                  Or <a href="/register">register now!</a>
+                  계정이 없다면 <a href="/register">회원가입</a>
                 </Form.Item>
               </form>
             </div>
