@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { loginUser } from "../../../../_actions/user_actions";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Form, Input, Button, Checkbox, Typography, message } from "antd";
-import { SmileOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Checkbox, Typography, message, Icon } from "antd";
 import { useDispatch } from "react-redux";
 
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -106,10 +105,7 @@ function LoginPage(props) {
                   <Input
                     id="id"
                     prefix={
-                      <SmileOutlined
-                        type="user"
-                        style={{ color: "rgba(0,0,0,.25)" }}
-                      />
+                      <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
                     placeholder="학번"
                     type="text"
@@ -131,10 +127,7 @@ function LoginPage(props) {
                   <Input
                     id="password"
                     prefix={
-                      <SmileOutlined
-                        type="lock"
-                        style={{ color: "rgba(0,0,0,.25)" }}
-                      />
+                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                     }
                     placeholder="비밀번호"
                     type="password"
