@@ -18,7 +18,7 @@
 
 .menu__logo a {
   display: inline-block;
-  font-size: 20px;
+  font-size: 22px;
   padding: 19px 20px;
 }
 
@@ -40,6 +40,7 @@
 
 .menu__container .ant-menu-item a,
 .menu__container .ant-menu-submenu-title a {
+  font-size: 15px;
   padding: 0px 15px;
 }
 
@@ -74,7 +75,7 @@
 
 #grid_NavBar1 {
   display: grid;
-  grid-template-rows: 4.7fr 1fr;
+  grid-template-rows: 4.5fr 1fr;
 }
 
 @media (max-width: 767px) {
@@ -95,6 +96,7 @@
   }
 
   .menu__logo a {
+    font-size: 20px;
     margin-left: -20px;
     padding: 0px 0px;
   }
@@ -115,6 +117,7 @@
 
   #grid_NavBar2 {
     display: grid;
-    grid-template-columns: 4.7fr 1fr;
+    grid-template-columns: 4.5fr 1fr;
+    height: auto;
   }
 }

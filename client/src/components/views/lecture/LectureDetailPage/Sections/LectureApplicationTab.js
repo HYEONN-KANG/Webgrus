@@ -49,7 +49,7 @@ function LectureApplicationTab(props) {
         console.log(ThisLecture)
         console.log(response.data)
       } else {
-        message.error('Lecture Infomation Error! Please contact the site manager')
+        message.error("강의 정보를 불러오지 못 했습니다! 관리자에게 문의하세요")
         window.location.reload();
       }
     })
@@ -71,7 +71,7 @@ function LectureApplicationTab(props) {
         console.log(LectureApplicantsInfo)
         console.log(response.data.ApplicantsInfo)
       } else {
-        message.error('Lecture Infomation Error! Please contact the site manager')
+        message.error("강의 정보를 불러오지 못 했습니다! 관리자에게 문의하세요")
         navigate('/lectures')
       }
     })
@@ -80,7 +80,7 @@ function LectureApplicationTab(props) {
       if (response.data.success) {
         setAppliedLecture(response.data.isApplied)
       } else {
-        message.error('Lecture Infomation Error! Please contact the site manager')
+        message.error("강의 정보를 불러오지 못 했습니다! 관리자에게 문의하세요")
         navigate('/lectures')
       }
     })
@@ -102,7 +102,7 @@ function LectureApplicationTab(props) {
 
           window.location.reload();
         } else {
-          message.error('Application Error! Please contact the site manager')
+          message.error("수강신청에 실패했습니다! 관리자에게 문의하세요")
           window.location.reload();
         }
       })
@@ -114,7 +114,7 @@ function LectureApplicationTab(props) {
 
           window.location.reload();
         } else {
-          message.error('Application Error! Please contact the site manager')
+          message.error("수강신청에 실패했습니다! 관리자에게 문의하세요")
           window.location.reload();
         }
       })
@@ -125,7 +125,7 @@ function LectureApplicationTab(props) {
     if (localStorage.getItem('userId') === ThisLecture.teacher._id) {
       return (
         <div style={{ width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-        <Divider><h2>Application</h2></Divider>
+        <Divider><h2>수강신청</h2></Divider>
         <br />
         <h3> 강의 신청자가 여기에 표시됩니다 </h3>
         <p />
@@ -137,7 +137,7 @@ function LectureApplicationTab(props) {
                 <Meta avatar={<Avatar src={applicants.ApplicantInfo.image} />}
                 title={applicants.ApplicantInfo.name} description="" />
                 <h3 style={{ position: 'relative', bottom: '4px' }}>
-                Contact - {applicants.ApplicantInfo.email} / 0{applicants.ApplicantInfo.phonenumber}</h3>
+                Contact - {applicants.ApplicantInfo.email} </h3>
               </div>
             </Col>
           })}
@@ -151,7 +151,7 @@ function LectureApplicationTab(props) {
     } else if (ThisLecture.applicationPeriod === true) {
       return (
         <div style={{ width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-        <Divider><h2>Application</h2></Divider>
+        <Divider><h2>수강신청</h2></Divider>
         <h2>{LectureApplicants}  /  {ThisLecture.capacity}</h2>
         <p />
         <Button style={{ height: 'auto', minWidth: '275px'}} onClick={onApply}>
@@ -170,7 +170,7 @@ function LectureApplicationTab(props) {
     } else if (ThisLecture.applicationPeriod === false) {
       return (
         <div style={{ width: '100%', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column' }}>
-        <Divider><h2>Application</h2></Divider>
+        <Divider><h2>수강신청</h2></Divider>
         <h2>{LectureApplicants}  /  {ThisLecture.capacity}</h2>
         <p />
         <Button style={{ height: 'auto', minWidth: '275px'}}>

@@ -7,19 +7,19 @@ function LeftMenu(props) {
   return (
     <Menu style={{ width: 256 }} selectedKeys="Selected" mode="vertical">
     <Menu.Item>
-      <a href="/">Introduce</a>
+      <a href="/notice">공지</a>
     </Menu.Item>
     <Menu.Item>
-      <a href="/">Notifications</a>
+      <a href="/freeboard">게시판</a>
     </Menu.Item>
     <Menu.Item>
-      <a href="/lectures">Lectures</a>
+      <a href="/lectures">강의</a>
     </Menu.Item>
     <Menu.Item>
-      <a href="/">Study Groups</a>
+      <a href="/studygroups">스터디그룹</a>
     </Menu.Item>
     <Menu.Item>
-      <a href="/">Contest Info</a>
+      <a href="/contest">공모전</a>
     </Menu.Item>
     </Menu>
   )

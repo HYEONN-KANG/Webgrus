@@ -20,7 +20,7 @@ function NavBar() {
       <div className="menu__logo">
         <a href="/">WebGrus</a>
       </div>
-      <div className="menu__container" id="grid_NavBar1">
+      <div className="menu__container" id="grid_NavBar1" style={{ paddingTop: "5px" }}>
         <div className="menu_left">
           <LeftMenu mode="vertical" />
         </div>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import axios from 'axios';
-import { USER_SERVER } from '../../../Config';
+import { USER_SERVER } from '../../../../Config';
 import { useSelector } from "react-redux";
 
 import {
@@ -42,24 +42,47 @@ function RightMenu(props) {
   };
 
   if (user.userData && !user.userData.isAuth) {
-    return (
-      <Menu style={{ width: 256 }} mode="vertical">
-        <Menu.Item>
-          <a href="/login">Sign in</a>
-        </Menu.Item>
-        <Menu.Item>
-          <a href="/register">Sign up</a>
-        </Menu.Item>
-      </Menu>
-    )
+    if (user.userData.id) {
+      return (
+        <Menu style={{ width: 256 }} mode="vertical">
+          <Menu.Item>승인 대기 중</Menu.Item>
+          <Menu.Item>
+            <a onClick={logoutHandler}>Logout</a>
+          </Menu.Item>
+        </Menu>
+      );
+    } else {
+      return (
+        <Menu style={{ width: 256 }} mode="vertical">
+          <Menu.Item>
+            <a href="/login">로그인</a>
+          </Menu.Item>
+          <Menu.Item>
+            <a href="/register">회원가입</a>
+          </Menu.Item>
+        </Menu>
+      );
+    }
   } else {
-    return (
+    if (user.userData.role === 2) {
+      return (
       <Menu style={{ width: 256 }} mode="vertical">
         <Menu.Item>
-          <a onClick={logoutHandler}>Logout</a>
+          <a href="/admin">회원  관리</a>
         </Menu.Item>
-      </Menu>
-    )
+        <Menu.Item>
+          <a onClick={logoutHandler}>로그아웃</a>
+        </Menu.Item>
+      </Menu>)
+    } else {
+      return (
+        <Menu style={{ width: 256 }} mode="vertical">
+          <Menu.Item>
+            <a onClick={logoutHandler}>로그아웃</a>
+          </Menu.Item>
+        </Menu>
+      )
+    }
   }
 }
 

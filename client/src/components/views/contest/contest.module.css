@@ -1,7 +1,11 @@
+* {
+	box-sizing: border-box;
+}
+
 .container {
+	width: 100%;
 	min-height: 500px;
 	height: 100vh;
-	display: flex;
 }
 
 .contest {
@@ -9,24 +13,52 @@
 }
 
 .header {
+	position: relative;
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
+	align-items: center;
+}
+
+.contestTitle {
+	font-size: 40px;
 }
 
 .search {
 	height: 30px;
-	transform: translateY(3px);
+	position: absolute;
+	right: 50px;
 }
+
+.searchInput {
+	height: 30px;
+	border: 2px black solid;
+	border-right: none;
+}
+
+.searchButton {
+	border: 2px black solid;
+	border-left: none;
+	width: 70px;
+	height: 30px;
+	background-color: rgb(198, 203, 255);
+	opacity: 80%;
+}
+.addWriteButton {
+	height: 30px;
+	border: 2px black solid;
+	background-color: blanchedalmond;
+	margin-left: 5px;
+}
+
 .detailContainer {
 }
-.addWriteContainer {
-}
-.writinglist {
-	margin-bottom: 30px;
+
+.writingList {
 	list-style: none;
 	display: flex;
 	justify-content: center;
-	padding: 0;
+	border-top: 5px rgb(198, 203, 255) solid;
+	border-bottom: 5px rgb(198, 203, 255) solid;
 }
 
 .hidden {

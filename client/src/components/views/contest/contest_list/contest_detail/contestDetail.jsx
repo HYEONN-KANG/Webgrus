@@ -14,10 +14,11 @@ const ContestDetail = ({ detail, user }) => {
 		axios
 			.get('/api/contest/detail/writes', {
 				params: {
-					id: detail.id, // 해당 공모전 글의 모집 글 요청
+					_id: detail._id, // 해당 공모전 글의 모집 글 요청
 				},
 			})
 			.then((res) => {
+				console.log(res);
 				setWrites(res.data);
 			});
 	}, []);
@@ -29,27 +30,33 @@ const ContestDetail = ({ detail, user }) => {
 	const addWriting = (newWrite) => {
 		setAddWriting(false);
 		axios
-			.post('/api/contest/detail/addWrite', { newWrite }) // 새로운 글(write_id 미포함)
+			.post('/api/contest/detail/addWrite', { newWrite, detail }) // 공모전 글 아이디도 보내주고 있음
 			.then((res) => {
 				setWrites(res.data); // 새 글 목록 받아서 저장
 			});
 	};
 	const deleteWrite = (writeId) => {
 		axios
-			.post('/api/contest/detail/deleteWrite', { writeId }) // 글 id 전달
+			.post('/api/contest/detail/deleteWrite', { writeId, detail }) // 글 id 전달
 			.then((res) => {
 				setWrites(res.data); // 새 글 목록 받아서 저장 (rerender)
 			});
 	};
 	return (
 		<div className={styles.container}>
-			<div className={styles.search}>
-				{/* <input type="search" placeholder="검색"></input> */}
-				{user.authority === '2' && <input type="button" onClick={writing} value="글쓰기"></input>}
-			</div>
-			<div>{detail.description}</div>
+			<input
+				className={`${
+					(user.authority === '1') | (user.authority === '2') ? styles.addWrite : styles.hidden
+				}`}
+				type="button"
+				onClick={writing}
+				value="모집 글쓰기"
+			></input>
 			<div>
-				<h2>팀원 모집</h2>
+				<div className={styles.poster}>
+					<img src={detail.src} alt="이미지가 없습니다."></img>
+					<div className={styles.description}>{detail.description}</div>
+				</div>
 				{addWrite && <AddWrite writes={writes} user={user} addWriting={addWriting} />}
 				{addWrite || (
 					<ul className={styles.writingList}>

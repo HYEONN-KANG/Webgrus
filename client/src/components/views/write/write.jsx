@@ -23,19 +23,19 @@ const Write = ({ deleteWrite, user, write }) => {
 			<li className={styles.write}>
 				<input
 					type="button"
-					className={!toggle ? styles.plusButton : styles.hidden}
+					className={`${styles.listItem} ${!toggle ? styles.plusButton : styles.hidden}`}
 					onClick={toggleDescroption}
 					value="+"
 				/>
 				<input
 					type="button"
-					className={toggle ? styles.plusButton : styles.hidden}
+					className={`${styles.listItem} ${toggle ? styles.plusButton : styles.hidden}`}
 					onClick={toggleDescroption}
 					value="-"
 				/>
-				<h3>{write.title}</h3>
-				<h3>{write.author}</h3>
-				<h3>{write.date}</h3>
+				<div className={styles.listItem}>{write.title}</div>
+				<div className={styles.listItem}>{write.author}</div>
+				<div className={styles.listItem}>{write.date}</div>
 				{(user.id === write.id) | (user.authority === '2') ? (
 					<button onClick={deleteWriteProps} className={styles.delete}>
 						삭제
