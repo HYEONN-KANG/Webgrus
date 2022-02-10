@@ -11,7 +11,7 @@ import Admin from './views/admin/admin';
 // import Sign from "./views/sign/sign";
 import RegisterPage from './views/register/RegisterPage/RegisterPage';
 import Auth from '../hoc/auth';
-import NavBar from "./views/sidebar/NavBar/NavBar";
+import NavBar from './views/sidebar/NavBar/NavBar';
 import LecturePage from './views/lecture/LecturePage/LecturePage';
 import LectureDetailPage from './views/lecture/LectureDetailPage/LectureDetailPage';
 import LectureUploadPage from './views/lecture/LectureUploadPage/LectureUploadPage';
@@ -23,40 +23,46 @@ import StudyGroupEditPage from './views/studygroups/StudyGroupEditPage/StudyGrou
 
 function App() {
 	return (
-		<div  id="grid_Main2">
-      <Suspense fallback={(<div>Loading...</div>)} id="grid_Main1">
-        <NavBar />
+		<div id="grid_Main2">
+			<Suspense fallback={<div>Loading...</div>} id="grid_Main1">
+				<NavBar />
 				<div>
-				<Routes>
-				{/* 메인화면 */}
-				<Route path="/" element={Auth(Main, null)} />
-				{/*공지*/}
-				<Route path="/notice" element={Auth(Notice, null)} />
-				{/* 강의 */}
-				<Route path="/lectures" element={Auth(LecturePage, null)} />
-				<Route path="/lectures/register" element={Auth(LectureUploadPage, null)} />
-				<Route path="/lectures/:lectureId" element={Auth(LectureDetailPage, null)} />
-				<Route path="/lectures/:lectureId/edit" element={Auth(LectureEditPage, null)} />
-				{/* 스터디 */}
-				<Route path="/studygroups" element={Auth(StudyGroupPage, null)} />
-				<Route path="/studygroups/register" element={Auth(StudyGroupUploadPage, null)} />
-				<Route path="/studygroups/:studygroupId" element={Auth(StudyGroupDetailPage, null)} />
-				<Route path="/studygroups/:studygroupId/edit" element={Auth(StudyGroupEditPage, null)} />
-				{/* 공모전 */}
-				<Route path="/contest" element={Auth(Contest, null)} />
-				<Route path="/contest/addWriting" element={Auth(AddContest, null)} />
-				{/* 자유게시판 */}
-				<Route path="/freeboard" element={Auth(FreeBoard, null)} />
-				{/* 관리자 */}
-				<Route path="/admin" element={Auth(Admin, null)} />
-				{/* 로그인 */}
-				<Route path="/login" element={Auth(Login, null)} />
-				{/* 회원가입 */}
-				<Route path="/register" element={Auth(RegisterPage, null)} />
-				</Routes>
-			</div>
-		</Suspense>
-	</div>
+					<Routes>
+						{/* 메인화면 */}
+						<Route path="/" element={Auth(Main, null)} />
+						{/*공지*/}
+						<Route path="/notice" element={Auth(Notice, false, null)} />
+						{/* 강의 */}
+						<Route path="/lectures" element={Auth(LecturePage, true, null)} />
+						<Route path="/lectures/register" element={Auth(LectureUploadPage, true, null)} />
+						<Route path="/lectures/:lectureId" element={Auth(LectureDetailPage, true, null)} />
+						<Route path="/lectures/:lectureId/edit" element={Auth(LectureEditPage, true, null)} />
+						{/* 스터디 */}
+						<Route path="/studygroups" element={Auth(StudyGroupPage, true, null)} />
+						<Route path="/studygroups/register" element={Auth(StudyGroupUploadPage, true, null)} />
+						<Route
+							path="/studygroups/:studygroupId"
+							element={Auth(StudyGroupDetailPage, true, null)}
+						/>
+						<Route
+							path="/studygroups/:studygroupId/edit"
+							element={Auth(StudyGroupEditPage, null)}
+						/>
+						{/* 공모전 */}
+						<Route path="/contest" element={Auth(Contest, true, null)} />
+						<Route path="/contest/addWriting" element={Auth(AddContest, true, null)} />
+						{/* 자유게시판 */}
+						<Route path="/freeboard" element={Auth(FreeBoard, true, null)} />
+						{/* 관리자 */}
+						<Route path="/admin" element={Auth(Admin, true, null)} />
+						{/* 로그인 */}
+						<Route path="/login" element={Auth(Login, null)} />
+						{/* 회원가입 */}
+						<Route path="/register" element={Auth(RegisterPage, null)} />
+					</Routes>
+				</div>
+			</Suspense>
+		</div>
 	);
 }
 
