@@ -5,16 +5,17 @@ import AddWrite from '../write/addwrite/addWrite';
 import axios from 'axios';
 import SelectPage from '../write/selectPage/selectPage';
 import EditWrite from '../write/editWrite/editWrite';
+import { useSelector } from 'react-redux';
 
-const FreeBoard = ({ user }) => {
+const FreeBoard = ({}) => {
 	const [addWrite, setAddWriting] = useState(false);
 	const [editWrite, setEditWriting] = useState({
 		write: '',
 		status: false,
 	});
 	const [writes, setWrites] = useState([]);
-
 	const [keyword, setKeyword] = useState(''); // 검색 키워드
+	let user = useSelector((state) => state.user.userData);
 
 	useEffect(() => {
 		// 글 목록 불러오기
@@ -113,9 +114,7 @@ const FreeBoard = ({ user }) => {
 							></input>
 							<input
 								className={`${
-									(user.authority === '1') | (user.authority === '2')
-										? styles.addWrite
-										: styles.hidden
+									(user.role === 1) | (user.role === 2) ? styles.addWrite : styles.hidden
 								}`}
 								type="button"
 								onClick={writing}

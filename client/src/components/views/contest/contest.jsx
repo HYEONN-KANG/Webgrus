@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import ContestWrite from './contest_list/contestWrite';
 import ContestDetail from './contest_list/contest_detail/contestDetail';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
-const Contest = ({ user }) => {
+const Contest = ({}) => {
 	const navigate = useNavigate();
 	const [showDeatilCheck, setShowDetailCheck] = useState(false); // 세부사항 볼때 true
 	const [detail, setDetail] = useState(); // 세부사항 볼 때 공모전 정보
 	const [writes, setWrites] = useState([]); // 공모전 글 저장
-
+	let user = useSelector((state) => state.user.userData);
 	const [keyword, setKeyword] = useState(''); // 검색 키워드
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ const Contest = ({ user }) => {
 									onClick={searchWriting}
 								></input>
 								<button
-									className={`${showDeatilCheck ? styles.hidden : styles.addWriteButton}`}
+									className={`${user.role === 2 ? styles.addWriteButton : styles.hidden}`}
 									onClick={() => navigate('/contest/addWriting')}
 								>
 									공모전 글 작성

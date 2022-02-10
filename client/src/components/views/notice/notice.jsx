@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './notice.module.css';
 import Write from '../write/write';
 import AddWrite from '../write/addwrite/addWrite';
@@ -6,7 +7,7 @@ import axios from 'axios';
 import SelectPage from '../write/selectPage/selectPage';
 import EditWrite from '../write/editWrite/editWrite';
 
-const Notice = ({ user }) => {
+const Notice = ({}) => {
 	const [addWrite, setAddWriting] = useState(false);
 	const [editWrite, setEditWriting] = useState({
 		write: '',
@@ -14,12 +15,9 @@ const Notice = ({ user }) => {
 	});
 	const [writes, setWrites] = useState([]);
 	const [keyword, setKeyword] = useState(''); // 검색 키워드
-
-	// 메모리 누수 방지 CleanUP
-	useEffect(() => {});
+	let user = useSelector((state) => state.user.userData);
 
 	useEffect(() => {
-		console.log(user);
 		// 글 목록 불러오기
 		pageChange(1); // 처음엔 1페이지 불러오기
 
@@ -85,7 +83,7 @@ const Notice = ({ user }) => {
 	// 검색 버튼을 클릭했을때
 	const searchWriting = () => {
 		axios
-			.get('/api/notice/search', { params: keyword }) // 글 목록 요청 -> 페이지별 글 나누기
+			.get('/api/notice/search', { params: keyword }) //
 			.then((res) => {
 				setWrites(res.data);
 			});
@@ -116,9 +114,7 @@ const Notice = ({ user }) => {
 							></input>
 							<input
 								className={`${
-									(user.authority === '1') | (user.authority === '2')
-										? styles.addWrite
-										: styles.hidden
+									(user.role === 1) | (user.role === 2) ? styles.addWrite : styles.hidden
 								}`}
 								type="button"
 								onClick={writing}

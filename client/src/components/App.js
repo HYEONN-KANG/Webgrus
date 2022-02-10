@@ -31,7 +31,7 @@ function App() {
 						{/* 메인화면 */}
 						<Route path="/" element={Auth(Main, null)} />
 						{/*공지*/}
-						<Route path="/notice" element={Auth(Notice, false, null)} />
+						<Route path="/notice" element={Auth(Notice, null)} />
 						{/* 강의 */}
 						<Route path="/lectures" element={Auth(LecturePage, true, null)} />
 						<Route path="/lectures/register" element={Auth(LectureUploadPage, true, null)} />

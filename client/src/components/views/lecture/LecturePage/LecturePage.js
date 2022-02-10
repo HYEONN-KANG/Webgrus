@@ -4,6 +4,7 @@ import { Card, Avatar, Col, Typography, Row, Button, Divider, message, Skeleton 
 import axios from 'axios';
 
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function withRouter(Component) {
 	function ComponentWithRouterProp(props) {

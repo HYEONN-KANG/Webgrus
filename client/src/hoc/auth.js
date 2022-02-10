@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth } from '../_actions/user_actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -11,12 +11,8 @@ export default function hoc_auth(SpecificComponent, option, adminRoute = null) {
 		const dispatch = useDispatch();
 
 		useEffect(() => {
-			console.log(user);
-
 			//To know my current status, send Auth request
 			dispatch(auth()).then((response) => {
-				console.log(response);
-
 				//Not Loggined in Status
 				if (!response.payload.isAuth) {
 					if (option) {
@@ -37,7 +33,6 @@ export default function hoc_auth(SpecificComponent, option, adminRoute = null) {
 				}
 			});
 		}, []);
-
 		return <SpecificComponent {...props} user={user} />;
 	}
 	return <AuthenticationCheck />;
