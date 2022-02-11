@@ -3,12 +3,14 @@
 }
 
 .container {
+	display: flex;
+	align-items: center;
 	width: 100%;
 	min-height: 500px;
 	height: 100vh;
 }
 
-.notice {
+.freeBoard {
 	width: 100%;
 }
 
@@ -20,7 +22,7 @@
 }
 
 .freeBoardTitle {
-	font-size: 40px;
+	font-size: 30px;
 }
 
 .search {
@@ -40,13 +42,13 @@
 	border-left: none;
 	width: 70px;
 	height: 30px;
-	background-color: rgb(198, 203, 255);
+	background-color: rgb(195, 195, 195);
 	opacity: 80%;
 }
 
 .writingList {
-	border-top: 5px rgb(198, 203, 255) solid;
-	border-bottom: 5px rgb(198, 203, 255) solid;
+	border-top: 1px rgb(193, 193, 193) solid;
+	border-bottom: 1px rgb(193, 193, 193) solid;
 	list-style: none;
 	padding: 0;
 }
@@ -54,7 +56,7 @@
 .addWrite {
 	height: 30px;
 	border: 2px black solid;
-	background-color: blanchedalmond;
+	background-color: rgb(195, 195, 195);
 	margin-left: 5px;
 }
 

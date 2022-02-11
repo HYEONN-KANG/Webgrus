@@ -3,6 +3,8 @@
 }
 
 .container {
+	display: flex;
+	align-items: center;
 	width: 100%;
 	min-height: 500px;
 	height: 100vh;
@@ -20,7 +22,7 @@
 }
 
 .contestTitle {
-	font-size: 40px;
+	font-size: 30px;
 }
 
 .search {
@@ -40,13 +42,13 @@
 	border-left: none;
 	width: 70px;
 	height: 30px;
-	background-color: rgb(198, 203, 255);
+	background-color: rgb(224, 224, 224);
 	opacity: 80%;
 }
 .addWriteButton {
 	height: 30px;
 	border: 2px black solid;
-	background-color: blanchedalmond;
+	background-color: rgb(224, 224, 224);
 	margin-left: 5px;
 }
 
@@ -57,8 +59,8 @@
 	list-style: none;
 	display: flex;
 	justify-content: center;
-	border-top: 5px rgb(198, 203, 255) solid;
-	border-bottom: 5px rgb(198, 203, 255) solid;
+	border-top: 1px rgb(224, 224, 224) solid;
+	border-bottom: 1px rgb(224, 224, 224) solid;
 }
 
 .hidden {
