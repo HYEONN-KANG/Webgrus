@@ -1,15 +1,17 @@
 .container {
-	border-top: 5px rgb(198, 203, 255) solid;
-	border-bottom: 5px rgb(198, 203, 255) solid;
+	border-top: 1px rgb(224, 224, 224) solid;
+	border-bottom: 1px rgb(224, 224, 224) solid;
 }
 
 .addWrite {
+	width: 100px;
 	height: 30px;
 	border: 2px black solid;
-	background-color: blanchedalmond;
+	background-color: rgb(224, 224, 224);
 	margin-left: 5px;
 	position: absolute;
 	right: 50px;
+	top: 50px;
 }
 
 .poster {

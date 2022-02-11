@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './contestDetail.module.css';
 import Write from '../../../write/write';
 import AddWrite from '../../../write/addwrite/addWrite';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-const ContestDetail = ({ detail, user }) => {
+const ContestDetail = ({ detail }) => {
 	const [addWrite, setAddWriting] = useState(false);
 	const [writes, setWrites] = useState([]);
+	let user = useSelector((state) => state.user.userData);
 
 	useEffect(() => {
 		// 모집 글 목록 불러오기
@@ -45,9 +47,7 @@ const ContestDetail = ({ detail, user }) => {
 	return (
 		<div className={styles.container}>
 			<input
-				className={`${
-					(user.authority === '1') | (user.authority === '2') ? styles.addWrite : styles.hidden
-				}`}
+				className={`${(user.role === 1) | (user.role === 2) ? styles.addWrite : styles.hidden}`}
 				type="button"
 				onClick={writing}
 				value="모집 글쓰기"

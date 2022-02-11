@@ -21,7 +21,8 @@
 }
 
 .dday {
-	background-color: rgb(145, 201, 246);
+	color: #fff;
+	background-color: rgb(66, 66, 66);
 	position: absolute;
 	bottom: 0;
 	left: 0;
