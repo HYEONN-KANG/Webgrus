@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-
+const fs = require("fs");
 const { StudyGroup } = require("../../models/StudyGroup");
 
 const { auth } = require("../../middleware/auth");
@@ -71,6 +71,19 @@ router.post("/getStudyGroupDetail", (req, res) => {
 });
 
 router.post("/deleteStudyGroup", (req, res) => {
+  // 스터디 썸네일 삭제
+  StudyGroup.findOne({ _id: req.body.studygroupId }).then((res) => {
+    try {
+      fs.unlinkSync("./client/public/" + res.filePath);
+    } catch (err) {
+      if (err.code == "ENOENT") {
+        console.log("파일삭제 error 발생");
+      }
+      console.log("파일 삭제 성공");
+    }
+  });
+
+  // 스터디 삭제
   StudyGroup.findOne({ _id: req.body.studygroupId })
     .populate("manager")
     .remove((err) => {
