@@ -4,6 +4,7 @@ const detail = require("./contestDetail");
 const Contest = require("../../models/contest");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 const today = new Date(); // 현재 날짜
 
 // 팀원 모집 글 분리
@@ -67,14 +68,10 @@ router.post("/addPoseter", uploadFolder.single("file"), (req, res) => {
 
 // 공모전 소개 글 추가
 router.post("/addWrite", (req, res) => {
-  console.log("/addWrite로 들어옴");
-
   // post 형식으로 받아온 데이터를 변수로 저장
   let post = req.body;
-  console.log(post);
   let new_contest = new Contest();
   new_contest.id = post.id; // user id
-  // new_contest.poster = post.newWrite.poster;
   new_contest.title = post.title;
   new_contest.src = post.src; // 포스터 이미지가 저장된 경로
   new_contest.description = post.description;
@@ -86,17 +83,7 @@ router.post("/addWrite", (req, res) => {
     .then((savedContest) => {
       // 데이터를 db에 추가
       console.log("save 성공");
-      console.log(savedContest);
       res.json(savedContest);
-      // Contest.find({}, (err, contest) => {
-      //   // 다시 글 목록을 불러와서 클라이언트로 전달
-      //   if (err) {
-      //     console.log("공모전 목록 가져오기 error 발생");
-      //     return res.json(err);
-      //   }
-      //   console.log("공모전 목록 가져오기 성공");
-      //   res.json(contest);
-      // });
     })
     .catch((err) => {
       console.log(err);
@@ -106,9 +93,23 @@ router.post("/addWrite", (req, res) => {
 
 // 공모전 글 삭제
 router.post("/deleteWrite", (req, res) => {
-  const { writeId } = req.body;
+  console.log(req.body);
+  // const { writeId, imgsrc } = req.body;
+  const writeId = req.body.writeId;
+  const imgsrc = req.body.imgsrc;
   console.log(writeId);
+  console.log(imgsrc);
 
+  // 해당 공모전의 사진을 삭제
+  try {
+    fs.unlinkSync("./client/public/" + imgsrc);
+  } catch (err) {
+    if (err.code == "ENOENT") {
+      console.log("파일삭제 error 발생");
+    }
+  }
+
+  // 해당 공모전 삭제
   Contest.deleteOne({ _id: writeId }, (err, result) => {
     if (err) console.log("공모전 삭제 실패", err);
     else {
