@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { Lecture } = require("../../models/Lecture");
 const path = require("path");
+const fs = require("fs");
 
 const { auth } = require("../../middleware/auth");
 const multer = require("multer");
@@ -31,7 +32,6 @@ const upload = multer({ storage: storage }).single("file");
 //=================================
 
 router.post("/uploadThumnail", (req, res) => {
-  console.log("여긴 upload썸네일");
   upload(req, res, (err) => {
     if (err) {
       return res.json({ success: false, err });
@@ -72,6 +72,19 @@ router.post("/getLectureDetail", (req, res) => {
 });
 
 router.post("/deleteLecture", (req, res) => {
+  // 강의 썸네일 삭제
+  Lecture.findOne({ _id: req.body.lectureId }).then((res) => {
+    try {
+      fs.unlinkSync("./client/public/" + res.filePath);
+    } catch (err) {
+      if (err.code == "ENOENT") {
+        console.log("파일삭제 error 발생");
+      }
+      console.log("파일 삭제 성공");
+    }
+  });
+
+  // 강의 삭제
   Lecture.findOne({ _id: req.body.lectureId })
     .populate("teacher")
     .remove((err) => {

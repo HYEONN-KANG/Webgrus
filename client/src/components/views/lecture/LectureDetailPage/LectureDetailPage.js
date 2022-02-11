@@ -12,7 +12,7 @@ import {
   Skeleton,
   Popconfirm,
   message,
-  Icon
+  Icon,
 } from "antd";
 import axios from "axios";
 import LectureApplicationTab from "./Sections/LectureApplicationTab.js";
@@ -61,9 +61,7 @@ function LectureDetailPage(props) {
         message.warning("Lecture deleted");
         navigate("/lectures");
       } else {
-        message.error(
-          "강의 삭제에 실패했습니다! 관리자에게 문의하세요"
-        );
+        message.error("강의 삭제에 실패했습니다! 관리자에게 문의하세요");
         navigate("/lectures");
       }
     });
