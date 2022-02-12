@@ -107,25 +107,40 @@ router.post("/changeAuth", isValidToken, isAdmin, (req, res) => {
       if (err) {
         return res.json({ success: false, err });
       } else {
-        User.find(
-          { $or: [{ role: 0 }, { role: 1 }, { role: 2 }] },
-          (err, docs) => {
-            const userlist = [];
-            for (let i = 0; i < docs.length; i++) {
-              const user = {
-                id: docs[i].id,
-                name: docs[i].name,
-                email: docs[i].email,
-                role: docs[i].role,
-              };
-              userlist.push(user);
-            }
-            return res.status(200).json({ success: true, userlist });
-          }
-        );
+        res.redirect("/api/users/list");
       }
     }
   );
+});
+
+/* 검색 기능 */
+router.get("/search", isValidToken, isAdmin, (req, res) => {
+  const keyword = req.query[0];
+  const userlist = [];
+
+  if (keyword === undefined) {
+    res.redirect("/api/users/list");
+  } else {
+    User.find(
+      { $or: [{ id: { $regex: keyword } }, { name: { $regex: keyword } }] },
+      (err, docs) => {
+        if (err) {
+          return res.status(200).json({ success: false, userlist: [] });
+        } else {
+          for (let i = 0; i < docs.length; i++) {
+            const user = {
+              id: docs[i].id,
+              name: docs[i].name,
+              email: docs[i].email,
+              role: docs[i].role,
+            };
+            userlist.push(user);
+          }
+          return res.status(200).json({ success: true, userlist });
+        }
+      }
+    );
+  }
 });
 
 module.exports = router;

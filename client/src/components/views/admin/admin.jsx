@@ -13,6 +13,7 @@ const Admin = (props) => {
   // });
 
   const [users, setUsers] = useState();
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     axios.get("/api/users/list").then((res) => {
@@ -40,11 +41,35 @@ const Admin = (props) => {
       });
   };
 
+  const searchUser = () => {
+    axios.get("/api/users/search", { params: keyword }).then((res) => {
+      const userData = res.data.userlist.sort((a, b) => a.role - b.role);
+      setUsers(userData);
+    });
+  };
+
+  const changeKeyword = (e) => {
+    setKeyword(e.target.value);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 onClick={() => navigate(-1)}>이전 화면으로</h2>
-        <input type="search" placeholder="검색"></input>
+        <form>
+          <input
+            className={styles.searchInput}
+            type="search"
+            placeholder="🔍 학번 또는 이름"
+            onChange={changeKeyword}
+          ></input>
+          <input
+            className={styles.searchButton}
+            type="button"
+            value="검색"
+            onClick={searchUser}
+          ></input>
+        </form>
       </div>
       {users && (
         <ul>
