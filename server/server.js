@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const api = require('./routes/api');
 const bodyParser = require('body-parser');
@@ -21,6 +22,14 @@ app.use(helmet.noSniff());
 app.use(helmet.frameguard('deny'));
 
 app.disable('x-powered-by'); // expres가 사용되었다는 사실을 숨긴다
+
+// 빌드 파일로 연결
+
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.use('/', function (req, res, next) {
+	res.sendFile(path.join(__dirname + '../client/build', 'index.html'));
+});
 
 // db 연결
 db.connect();
