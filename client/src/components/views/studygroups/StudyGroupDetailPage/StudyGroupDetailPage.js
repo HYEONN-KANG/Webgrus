@@ -12,7 +12,7 @@ import {
   Skeleton,
   Popconfirm,
   message,
-  Icon
+  Icon,
 } from "antd";
 import axios from "axios";
 import StudyGroupApplicationTab from "./Sections/StudyGroupApplicationTab.js";
@@ -147,7 +147,8 @@ function StudyGroupDetailPage(props) {
             <img
               style={{ width: "50%" }}
               // src={StudyGroupDetail.filePath}
-              src={`http://localhost:3000/${StudyGroupDetail.filePath}`}
+              src={StudyGroupDetail.filePath}
+              alt="스터디그룹 이미지"
               controls
             />
             <br />

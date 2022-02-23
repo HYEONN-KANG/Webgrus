@@ -9,7 +9,7 @@ const multer = require("multer");
 
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "client/public/data/");
+    cb(null, "client/build/data/");
   },
   filename: (req, file, cb) => {
     cb(null, new Date().valueOf() + path.extname(file.originalname)); //저장될 파일 이름
